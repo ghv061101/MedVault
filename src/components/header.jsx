@@ -1,73 +1,48 @@
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {logout} from "@/db/apiAuth";
-import useFetch from "@/hooks/use-fetch";
-import {Avatar, AvatarFallback, AvatarImage} from "@radix-ui/react-avatar";
-import {LinkIcon, LogOut} from "lucide-react";
-import {Link, useNavigate} from "react-router-dom";
-import {BarLoader} from "react-spinners";
-import {Button} from "./ui/button";
-import {UrlState} from "@/context";
+import { Link, useLocation } from "react-router-dom";
+import { FileText, Heart, Home } from "lucide-react";
 
 const Header = () => {
-  const {loading, fn: fnLogout} = useFetch(logout);
-  const navigate = useNavigate();
-
-  const {user, fetchUser} = UrlState();
-
+  const location = useLocation();
+  
   return (
-    <>
-      <nav className="py-4 flex justify-between items-center">
-        <Link to="/">
-          <img src="/logo.png" className="h-16" alt="Trimrr Logo" />
+    <header className="bg-card border-b border-border py-4 px-6">
+      <div className="max-w-5xl mx-auto flex items-center justify-between">
+        <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+          <div className="p-2 bg-primary/20 rounded-xl">
+            <Heart className="w-7 h-7 text-primary" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-semibold tracking-tight text-foreground">MedVault</h1>
+            <p className="text-sm text-muted-foreground">Patient Document Portal</p>
+          </div>
         </Link>
-        <div className="flex gap-4">
-          {!user ? (
-            <Button onClick={() => navigate("/auth")}>Login</Button>
-          ) : (
-            <DropdownMenu>
-              <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden">
-                <Avatar>
-                  <AvatarImage src={user?.user_metadata?.profile_pic} />
-                  <AvatarFallback>HV</AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>
-                  {user?.user_metadata?.name}
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link to="/dashboard" className="flex">
-                    <LinkIcon className="mr-2 h-4 w-4" />
-                    My Links
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => {
-                    fnLogout().then(() => {
-                      fetchUser();
-                      navigate("/auth");
-                    });
-                  }}
-                  className="text-red-400"
-                >
-                  <LogOut className="mr-2 h-4 w-4" />
-                  <span>Logout</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
-        </div>
-      </nav>
-      {loading && <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />}
-    </>
+        
+        <nav className="flex items-center gap-4">
+          <Link 
+            to="/" 
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors ${
+              location.pathname === "/" 
+                ? "bg-primary/10 text-primary" 
+                : "text-muted-foreground hover:text-foreground hover:bg-muted"
+            }`}
+          >
+            <Home className="w-4 h-4" />
+            <span className="hidden sm:inline">Home</span>
+          </Link>
+          <Link 
+            to="/documents" 
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors ${
+              location.pathname === "/documents" 
+                ? "bg-primary/10 text-primary" 
+                : "text-muted-foreground hover:text-foreground hover:bg-muted"
+            }`}
+          >
+            <FileText className="w-4 h-4" />
+            <span className="hidden sm:inline">Documents</span>
+          </Link>
+        </nav>
+      </div>
+    </header>
   );
 };
 

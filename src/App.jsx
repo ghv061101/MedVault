@@ -1,58 +1,18 @@
-import "./App.css";
-import {RouterProvider, createBrowserRouter} from "react-router-dom";
-import UrlProvider from "./context";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Index from "./pages/Index";
+import Documents from "./pages/Documents";
+import DocumentsView from "./pages/DocumentsView";
+import NotFound from "./pages/NotFound";
 
-import AppLayout from "./layouts/app-layout";
-import RequireAuth from "./components/require-auth";
-
-import RedirectLink from "./pages/redirect-link";
-import LandingPage from "./pages/landing";
-import Dashboard from "./pages/dashboard";
-import LinkPage from "./pages/link";
-import Auth from "./pages/auth";
-
-const router = createBrowserRouter([
-  {
-    element: <AppLayout />,
-    children: [
-      {
-        path: "/",
-        element: <LandingPage />,
-      },
-      {
-        path: "/auth",
-        element: <Auth />,
-      },
-      {
-        path: "/dashboard",
-        element: (
-          <RequireAuth>
-            <Dashboard />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "/link/:id",
-        element: (
-          <RequireAuth>
-            <LinkPage />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "/:id",
-        element: <RedirectLink />,
-      },
-    ],
-  },
-]);
-
-function App() {
-  return (
-    <UrlProvider>
-      <RouterProvider router={router} />
-    </UrlProvider>
-  );
-}
+const App = () => (
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Index />} />
+      <Route path="/documents" element={<Documents />} />
+      <Route path="/documents/:id" element={<DocumentsView />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  </BrowserRouter>
+);
 
 export default App;

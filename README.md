@@ -97,8 +97,8 @@ project-root/
 
 #### 1. Clone the Repository
 ```bash
-git clone https://github.com/ghv061101/pdf-file-management.git
-cd pdf-file-management
+git clone https://github.com/ghv061101/MedVault.git
+cd MedVault
 ```
 
 #### 2. Install Frontend Dependencies
@@ -544,7 +544,7 @@ This project is licensed under the ISC License - see the LICENSE file for detail
 
 **GitHub:** [@ghv061101](https://github.com/ghv061101)
 
-**Repository:** [pdf-file-management](https://github.com/ghv061101/pdf-file-management)
+**Repository:** [MedVault](https://github.com/ghv061101/MedVault)
 
 ---
 
@@ -565,5 +565,6 @@ For issues, questions, or suggestions, please open an issue on GitHub or contact
 
 **Last Updated:** December 11, 2025
 **Version:** 1.0.0
-#   M e d V a u l t  
+#   M e d V a u l t 
+ 
  
